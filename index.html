@@ -285,6 +285,24 @@
       background: transparent;
     }
 
+    /* Light mode (default) */
+body {
+  background-color: white;
+  color: black;
+}
+
+/* Dark mode */
+body.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+/* You can also adjust other elements */
+.contact-box.dark-mode {
+  background-color: #333;
+  color: #eee;
+}
+    
     /* Responsive adjustments */
     @media (max-width: 768px) {
       #main-content {
@@ -473,6 +491,8 @@
     Instagram
   </a>
 </div>
+  <button id="darkModeToggle">🌙 Dark Mode</button>
+
   <footer>
     <p>&copy; 2025 Sylvia Wang. All rights reserved.</p>
   </footer>
@@ -481,6 +501,19 @@
     const nameEl = document.getElementById("name");
     const taglineEl = document.getElementById("tagline");
     const welcomeEl = document.getElementById("welcome");
+    const toggle = document.getElementById('darkModeToggle');
+
+toggle.addEventListener('click', () => {
+  document.body.classList.toggle('dark-mode');
+
+  // Optional: change button text/icon dynamically
+  if (document.body.classList.contains('dark-mode')) {
+    toggle.textContent = '☀️ Light Mode';
+  } else {
+    toggle.textContent = '🌙 Dark Mode';
+  }
+});
+
 
     window.onload = () => {
       setTimeout(() => nameEl.style.opacity = 1, 500);

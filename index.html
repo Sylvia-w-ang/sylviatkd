@@ -95,6 +95,55 @@
       overflow: hidden;
     }
 
+    /* Contact Box */
+    .contact-box {
+  position: fixed;
+  bottom: 3.5rem; /* above footer */
+  left: 0;
+  background-color: var(--accent);
+  color: white;
+  padding: 1rem 1.5rem;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.9rem;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+  max-width: 220px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  user-select: none;
+  transition: background-color 0.3s ease;
+}
+
+.contact-box:hover {
+  background-color: #a17e54; /* a bit darker */
+}
+
+.contact-link {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  transition: color 0.2s ease;
+}
+
+.contact-link:hover,
+.contact-link:focus {
+  color: #f0e3d3;
+  outline: none;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  stroke: white;
+  flex-shrink: 0;
+}
+    
+
     /* Sidebar */
     .sidebar {
       width: 280px;
@@ -145,6 +194,7 @@
 
     /* Main content area */
     .content-area {
+      padding-bottom: 4rem;
       flex: 1;
       overflow-y: auto;
       padding: 3rem 4rem;
@@ -395,7 +445,23 @@
       </div>
     </main>
   </div>
-
+<div class="contact-box" aria-label="Contact information">
+  <a href="mailto:sylviajhw@gmail.com" class="contact-link" aria-label="Email Sylvia">
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 4h16v16H4z" /> <!-- Envelope outline -->
+      <polyline points="22,6 12,13 2,6" />
+    </svg>
+    sylviajhw@gmail.com
+  </a>
+  <a href="https://instagram.com/sylvi_a_wang" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="Instagram profile">
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+      <path d="M16 11.37a4 4 0 1 1-4.73-4.73 4 4 0 0 1 4.73 4.73z" />
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+    </svg>
+    @https://instagram.com/sylvi_a_wang
+  </a>
+</div>
   <footer>
     <p>&copy; 2025 Sylvia Wang. All rights reserved.</p>
   </footer>

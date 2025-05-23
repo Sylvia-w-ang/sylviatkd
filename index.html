@@ -67,7 +67,7 @@
       color: var(--dark-brown);
       font-style: italic;
       opacity: 0;
-      transition: opacity 2s ease-in 2.5s;
+      transition: opacity 5s ease-in 5s;
     }
 
     #skip-intro {
@@ -167,7 +167,7 @@
   <div id="intro">
     <div id="name">Beyond a Sport</div>
     <div id="tagline">by Sylvia Wang</div>
-    <div id="welcome">Basketball X Taekwondo</div>
+    <div id="welcome">Taekwondo X Basketball</div>
     <button id="skip-intro">Skip Intro</button>
   </div>
 
@@ -178,17 +178,24 @@
     </header>
 
     <div class="tabs">
-      <button onclick="switchTab('about')">About</button>
-      <button onclick="switchTab('journey')">My Journey</button>
+      <button onclick="switchTab('introduction')">Introduction</button>
+      <button onclick="switchTab('quote')">"Ignore the Noise, Rise Above the Chaos"</button>
+      <button onclick="switchTab('strength')">Use Your Strength</button>
+      <button onclick="switchTab('win')">The importance of Wanting to Win</button>
+      <button onclick="switchTab('winorlearn')">Win or Learn</button>
+      <button onclick="switchTab('mainandsupport')">Main Sport vs. Supporting Sport</button>
+      <button onclick="switchTab('conclusion')">Concluding Statement</button>
+      <button onclick="switchTab('additional')">Additional Information</button>
       <button onclick="switchTab('gallery')">Gallery</button>
     </div>
 
     <div class="tab-content">
-      <div id="about" class="tab active">
-        <p>About section content here.</p>
-      </div>
-      <div id="journey" class="tab">
-        <p>Journey section content here.</p>
+      <div id="introduction" class="tab active">
+        <p>Hi, I'm Sylvia Wang, and I'm 16 years old. I'll be sharing my journey as a taekwondo poomsae athlete and a former basketball player. These short chapters reflect my personal experiences and insights — the lessons, the transitions, and the moments that have shaped me — and I hope they help you along your path.
+
+ First and foremost, I want to acknowledge everything sports has given me: the lessons I've learned, the people I've met, the places I've gone, and the personal growth I've experienced. I'm especially thankful to all the coaches who have guided me and helped shape the person I'm becoming. Being able to do what I do is a privilege, and I'm truly grateful for every step of the journey.
+
+ As you read through the following paragraphs, keep in mind that they only represent my personal perspectives and values at this moment as I’m going through the journey. I believe that there is a lot in front of me yet to be discovered, to be learned.</p>
       </div>
       <div id="gallery" class="tab">
         <p>Gallery section content here.</p>

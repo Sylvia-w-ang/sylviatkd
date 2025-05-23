@@ -192,6 +192,15 @@
       box-shadow: 0 0 8px var(--accent);
     }
 
+    .sidebar-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: var(--dark-brown);
+  user-select: none;
+  padding-left: 4px;
+}
+
     /* Main content area */
     .content-area {
       padding-bottom: 4rem;
@@ -325,7 +334,8 @@
 
     <!-- Sidebar Navigation -->
     <nav class="sidebar" aria-label="Main navigation">
-      
+  <h2 class="sidebar-title">Contents</h2>
+  
       <button onclick="switchTab('introduction')" id="btn-introduction" class="active">Introduction</button>
       <button onclick="switchTab('quote')" id="btn-quote">"Ignore the Noise, Rise Above the Chaos"</button>
       <button onclick="switchTab('strength')" id="btn-strength">Use Your Strength</button>

@@ -567,7 +567,7 @@
       document.querySelector('.content-area').scrollTop = 0;
     }
   
-  
+
   async function updateCounters() {
     const uniqueKey = 'beyondasport_unique_v2_visited';
 
@@ -588,8 +588,8 @@
       const totalData = await totalRes.json();
       const uniqueData = await uniqueRes.json();
 
-      document.getElementById('total-views').textContent = totalData.hits ?? 'N/A';
-      document.getElementById('unique-visitors').textContent = uniqueData.hits ?? 'N/A';
+      document.getElementById('total-views').textContent = totalData.value ?? 'N/A';
+      document.getElementById('unique-visitors').textContent = uniqueData.value ?? 'N/A';
 
     } catch (error) {
       console.error('Error updating counters:', error);
@@ -599,6 +599,7 @@
   }
 
   window.addEventListener('load', updateCounters);
+
 
 
 

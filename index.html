@@ -572,14 +572,22 @@
     const uniqueKey = 'beyondasport_unique_v2_visited';
 
     try {
-      // Always increment total views using an <img> tag to bypass CORS and rate-limiting
-      const viewImg = new Image();
-      viewImg.src = 'https://counterapi.com/api/counter/beyondasport_total/hit?nocache=' + Date.now();
+      //  Force increment total views with POST and keepalive (works better than <img>)
+      await fetch('https://counterapi.com/api/counter/beyondasport_total/hit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: '{}',
+        keepalive: true
+      });
 
-      //  Only increment unique visitors once per browser using localStorage
+      //  Only increment unique visitors once per browser
       if (!localStorage.getItem(uniqueKey)) {
-        const uniqueImg = new Image();
-        uniqueImg.src = 'https://counterapi.com/api/counter/beyondasport_unique_v2/hit';
+        await fetch('https://counterapi.com/api/counter/beyondasport_unique_v2/hit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: '{}',
+          keepalive: true
+        });
         localStorage.setItem(uniqueKey, 'true');
       }
 
@@ -590,7 +598,6 @@
       const totalData = await totalRes.json();
       const uniqueData = await uniqueRes.json();
 
-      //  Display values
       document.getElementById('total-views').textContent = totalData.value ?? 'N/A';
       document.getElementById('unique-visitors').textContent = uniqueData.value ?? 'N/A';
     } catch (error) {
@@ -601,9 +608,6 @@
   }
 
   window.addEventListener('load', updateCounters);
-
-
-
 
     
   </script>

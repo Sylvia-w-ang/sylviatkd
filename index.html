@@ -522,8 +522,8 @@
   </div>
   <div class="counter-item">
     🙋 Unique Visitors: <span id="unique-visitors">Loading…</span>
+  </div>
 </div>
-
   
   <footer>
     <p>&copy; 2025 Sylvia Wang. All rights reserved.</p>
@@ -572,39 +572,36 @@
       document.querySelector('.content-area').scrollTop = 0;
     }
   
-    
-    
-  async function updateCounters() {
-  const uniqueKey = 'beyondasport_unique_visited';
+  
+    async function updateCounters() {
+    console.log('updateCounters running');
+    const uniqueKey = 'beyondasport_unique_visited';
 
-  try {
-    // Increment total views count every time page loads
-    await fetch('https://counterapi.com/api/counter/beyondasport/hit');
-
-    // Check if this is a unique visitor
-    if (!localStorage.getItem(uniqueKey)) {
-      // First time visitor, increment unique count
+    try {
+      // Increment total views count
       await fetch('https://counterapi.com/api/counter/beyondasport/hit');
-      localStorage.setItem(uniqueKey, 'true');
+
+      // Unique visitor logic
+      if (!localStorage.getItem(uniqueKey)) {
+        // Only increment once for unique, if your API supports it separately
+        localStorage.setItem(uniqueKey, 'true');
+      }
+
+      const response = await fetch('https://counterapi.com/api/counter/beyondasport');
+      const data = await response.json();
+      console.log('Counter API response:', data);
+
+      document.getElementById('total-views').textContent = data.hits || 'N/A';
+      document.getElementById('unique-visitors').textContent = data.uniques || 'N/A';
+
+    } catch (error) {
+      console.error('Error updating counters:', error);
+      document.getElementById('total-views').textContent = 'Error';
+      document.getElementById('unique-visitors').textContent = 'Error';
     }
-
-    // Get current counts
-    const response = await fetch('https://counterapi.com/api/counter/beyondasport');
-    const data = await response.json();
-
-    // Update HTML elements with counts
-    document.getElementById('total-views').textContent = data.hits;
-    document.getElementById('unique-visitors').textContent = data.uniques;
-
-  } catch (error) {
-    console.error('Error updating counters:', error);
-    document.getElementById('total-views').textContent = 'Error';
-    document.getElementById('unique-visitors').textContent = 'Error';
   }
-}
 
-      window.onload = updateCounters;
-
+  window.addEventListener('load', updateCounters);
 
 
     

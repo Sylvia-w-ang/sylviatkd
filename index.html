@@ -318,6 +318,46 @@
         position: fixed;
       }
     }
+    
+  /* ─── COUNTER STYLES ───────────────────────────────────────────────────────── */
+#counters-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(191, 176, 155, 0.1); /* light accent tint */
+  border-top: 1px solid var(--soft-shadow);
+  margin-bottom: 1rem; /* space above the footer */
+  font-family: 'Open Sans', sans-serif;
+  color: var(--dark-brown);
+}
+
+.counter-item {
+  background: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 4px var(--soft-shadow);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.counter-item span {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+@media (max-width: 480px) {
+  #counters-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+/* ──────────────────────────────────────────────────────────────────────────── */
+
+    
   </style>
 </head>
 <body>
@@ -476,6 +516,17 @@
   </a>
 </div>
 
+  
+<div id="counters-container">
+  <div class="counter-item">
+    👁️ Total Views: <span id="total-views">Loading…</span>
+  </div>
+  <div class="counter-item">
+    🙋 Unique Visitors: <span id="unique-visitors">Loading…</span>
+  </div>
+</div> 
+
+  
   <footer>
     <p>&copy; 2025 Sylvia Wang. All rights reserved.</p>
   </footer>
@@ -522,6 +573,47 @@
       // Optional: scroll content area to top on tab switch
       document.querySelector('.content-area').scrollTop = 0;
     }
+
+      fetch('https://counterapi.com/api/counter/beyondasport_views/hit')
+    .then(res => res.json())
+    .then(data => {
+      // data.value is the new, incremented total‐views count
+      document.getElementById('total-views').textContent = data.value;
+    })
+    .catch(err => {
+      console.error('Error fetching total views:', err);
+      document.getElementById('total-views').textContent = 'N/A';
+    });
+
+
+      const uniqueKey = 'beyondasport_unique_visited';
+  if (!localStorage.getItem(uniqueKey)) {
+    // First time on this browser: increment the unique counter
+    fetch('https://counterapi.com/api/counter/beyondasport_unique/hit')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('unique-visitors').textContent = data.value;
+      })
+      .catch(err => {
+        console.error('Error incrementing unique visitors:', err);
+        document.getElementById('unique-visitors').textContent = 'N/A';
+      });
+    // Mark this browser as “counted” so we don’t increment again
+    localStorage.setItem(uniqueKey, 'true');
+  } else {
+    // Already counted in this browser: just fetch the existing unique count
+    fetch('https://counterapi.com/api/counter/beyondasport_unique')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('unique-visitors').textContent = data.value;
+      })
+      .catch(err => {
+        console.error('Error fetching unique visitors:', err);
+        document.getElementById('unique-visitors').textContent = 'N/A';
+      });
+  }
+
+    
   </script>
 </body>
 </html>

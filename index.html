@@ -452,7 +452,6 @@
 
 <div id="visitor-count">Loading visitors...</div>
 
-<script>
 fetch('https://counterapi.com/api/counter/beyondasport/hit')
   .then(response => response.json())
   .then(data => {
@@ -461,6 +460,8 @@ fetch('https://counterapi.com/api/counter/beyondasport/hit')
   .catch(() => {
     document.getElementById('visitor-count').innerText = 'Visitor count unavailable';
   });
+
+  </div>
 
       <div id="gallery" class="tab" role="tabpanel" aria-labelledby="btn-gallery">
         <h2>Gallery</h2>

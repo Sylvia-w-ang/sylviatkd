@@ -573,17 +573,25 @@
       // Optional: scroll content area to top on tab switch
       document.querySelector('.content-area').scrollTop = 0;
     }
+    
+  async function updateCounters() {
+    try {
+      // Increase the total views count
+      await fetch('https://counterapi.com/api/counter/beyondasport/hit');
 
-      fetch('https://counterapi.com/api/counter/beyondasport_views/hit')
-    .then(res => res.json())
-    .then(data => {
-      // data.value is the new, incremented total‐views count
-      document.getElementById('total-views').textContent = data.value;
-    })
-    .catch(err => {
-      console.error('Error fetching total views:', err);
-      document.getElementById('total-views').textContent = 'N/A';
-    });
+      // Get the updated counter data
+      const response = await fetch('https://counterapi.com/api/counter/beyondasport');
+      const data = await response.json();
+
+      // Update the page counters
+      document.getElementById('total-views').textContent = data.hits;
+      document.getElementById('unique-visitors').textContent = data.uniques;
+    } catch (error) {
+      console.error('Error updating counters:', error);
+      document.getElementById('total-views').textContent = 'Error';
+      document.getElementById('unique-visitors').textContent = 'Error';
+    }
+  }
 
 
       const uniqueKey = 'beyondasport_unique_visited';

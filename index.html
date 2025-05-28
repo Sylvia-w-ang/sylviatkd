@@ -519,12 +519,12 @@
   
 <div id="counters-container">
   <div class="counter-item">
-    👁️ Total Views: <span id="total-views">Loading…</span>
+    👁️ Total Views: <span id="views-counter">0</span>
   </div>
   <div class="counter-item">
-    🙋 Unique Visitors: <span id="unique-visitors">Loading…</span>
+    🙋 Unique Visitors: <span id="unique-counter">0</span>
   </div>
-</div> 
+</div>
 
   
   <footer>
@@ -587,31 +587,34 @@
 
 
       const uniqueKey = 'beyondasport_unique_visited';
-  if (!localStorage.getItem(uniqueKey)) {
-    // First time on this browser: increment the unique counter
-    fetch('https://counterapi.com/api/counter/beyondasport_unique/hit')
-      .then(res => res.json())
+  // Check if user is unique visitor
+  if (!localStorage.getItem('beyondasport_unique_visited')) {
+    // First time visitor: increment unique visitor count
+    fetch('https://counterapi.com/api/counter/beyondasport/hit')
+      .then(response => response.json())
       .then(data => {
-        document.getElementById('unique-visitors').textContent = data.value;
+        localStorage.setItem('beyondasport_unique_visited', 'true');
+        document.getElementById('unique-counter').innerText = data.value;
       })
-      .catch(err => {
-        console.error('Error incrementing unique visitors:', err);
-        document.getElementById('unique-visitors').textContent = 'N/A';
-      });
-    // Mark this browser as “counted” so we don’t increment again
-    localStorage.setItem(uniqueKey, 'true');
+      .catch(err => console.error('Error fetching unique visitor:', err));
   } else {
-    // Already counted in this browser: just fetch the existing unique count
-    fetch('https://counterapi.com/api/counter/beyondasport_unique')
-      .then(res => res.json())
+    // Returning visitor: get unique visitor count without increment
+    fetch('https://counterapi.com/api/counter/beyondasport')
+      .then(response => response.json())
       .then(data => {
-        document.getElementById('unique-visitors').textContent = data.value;
+        document.getElementById('unique-counter').innerText = data.value;
       })
-      .catch(err => {
-        console.error('Error fetching unique visitors:', err);
-        document.getElementById('unique-visitors').textContent = 'N/A';
-      });
+      .catch(err => console.error('Error fetching unique visitor:', err));
   }
+
+  // Always increment total views count
+  fetch('https://counterapi.com/api/counter/beyondasport/hit')
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById('views-counter').innerText = data.value;
+    })
+    .catch(err => console.error('Error fetching total views:', err));
+
 
     
   </script>

@@ -568,32 +568,46 @@
     }
   
 
-  async function updateCounters() {
+  async function incrementUniqueVisitor() {
     const uniqueKey = 'beyondasport_unique_v2_visited';
-
     try {
-      //  Force increment total views with POST and keepalive (works better than <img>)
+      if (localStorage.getItem(uniqueKey)) return;
+
+      const res = await fetch('https://counterapi.com/api/counter/beyondasport_unique_v2/hit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: '{}',
+        keepalive: true,
+      });
+
+      if (res.ok) {
+        localStorage.setItem(uniqueKey, 'true');
+      } else {
+        console.warn('Failed to register unique visitor:', res.status);
+      }
+    } catch (e) {
+      console.error('Unique visitor increment error:', e);
+    }
+  }
+
+  async function updateCounters() {
+    try {
+      // Increment total views every time
       await fetch('https://counterapi.com/api/counter/beyondasport_total/hit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: '{}',
-        keepalive: true
+        keepalive: true,
       });
 
-      //  Only increment unique visitors once per browser
-      if (!localStorage.getItem(uniqueKey)) {
-        await fetch('https://counterapi.com/api/counter/beyondasport_unique_v2/hit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: '{}',
-          keepalive: true
-        });
-        localStorage.setItem(uniqueKey, 'true');
-      }
+      // Increment unique visitors once per browser
+      await incrementUniqueVisitor();
 
-      //  Get updated counts
-      const totalRes = await fetch('https://counterapi.com/api/counter/beyondasport_total');
-      const uniqueRes = await fetch('https://counterapi.com/api/counter/beyondasport_unique_v2');
+      // Fetch updated counts concurrently
+      const [totalRes, uniqueRes] = await Promise.all([
+        fetch('https://counterapi.com/api/counter/beyondasport_total'),
+        fetch('https://counterapi.com/api/counter/beyondasport_unique_v2'),
+      ]);
 
       const totalData = await totalRes.json();
       const uniqueData = await uniqueRes.json();

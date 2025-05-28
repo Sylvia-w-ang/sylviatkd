@@ -450,6 +450,17 @@
           <p>My mission is to motivate, inspire, and guide the next generation of athletes -- to lead with strength, grow with humility, and live with purpose in every arena of life.</p>
       </div>
 
+<div id="visitor-count">Loading visitors...</div>
+
+<script>
+fetch('https://counterapi.com/api/counter/beyondasport/hit')
+  .then(response => response.json())
+  .then(data => {
+    document.getElementById('visitor-count').innerText = `Visitors: ${data.value}`;
+  })
+  .catch(() => {
+    document.getElementById('visitor-count').innerText = 'Visitor count unavailable';
+  });
 
       <div id="gallery" class="tab" role="tabpanel" aria-labelledby="btn-gallery">
         <h2>Gallery</h2>

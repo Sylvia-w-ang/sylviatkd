@@ -318,44 +318,6 @@
         position: fixed;
       }
     }
-    
-  /* ─── COUNTER STYLES ───────────────────────────────────────────────────────── */
-#counters-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-  padding: 1rem;
-  background: rgba(191, 176, 155, 0.1); /* light accent tint */
-  border-top: 1px solid var(--soft-shadow);
-  margin-bottom: 1rem; /* space above the footer */
-  font-family: 'Open Sans', sans-serif;
-  color: var(--dark-brown);
-}
-
-.counter-item {
-  background: white;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 0 4px var(--soft-shadow);
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.counter-item span {
-  font-weight: 600;
-  color: var(--accent);
-}
-
-@media (max-width: 480px) {
-  #counters-container {
-    flex-direction: column;
-    align-items: center;
-  }
-}
-/* ──────────────────────────────────────────────────────────────────────────── */
 
     
   </style>
@@ -549,14 +511,7 @@
   </a>
 </div>
 
-<div id="counters-container">
-  <div class="counter-item">
-    👁️ Total Views: <span id="total-views">Loading…</span>
-  </div>
-  <div class="counter-item">
-    🙋 Unique Visitors: <span id="unique-visitors">Loading…</span>
-  </div>
-</div>
+
   
   <footer>
     <p>&copy; 2025 Sylvia Wang. All rights reserved.</p>
@@ -605,61 +560,6 @@
       document.querySelector('.content-area').scrollTop = 0;
     }
   
-
-  async function incrementUniqueVisitor() {
-    const uniqueKey = 'beyondasport_unique_v2_visited';
-    try {
-      if (localStorage.getItem(uniqueKey)) return;
-
-      const res = await fetch('https://counterapi.com/api/counter/beyondasport_unique_v2/hit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: '{}',
-        keepalive: true,
-      });
-
-      if (res.ok) {
-        localStorage.setItem(uniqueKey, 'true');
-      } else {
-        console.warn('Failed to register unique visitor:', res.status);
-      }
-    } catch (e) {
-      console.error('Unique visitor increment error:', e);
-    }
-  }
-
-  async function updateCounters() {
-    try {
-      // Increment total views every time
-      await fetch('https://counterapi.com/api/counter/beyondasport_total/hit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: '{}',
-        keepalive: true,
-      });
-
-      // Increment unique visitors once per browser
-      await incrementUniqueVisitor();
-
-      // Fetch updated counts concurrently
-      const [totalRes, uniqueRes] = await Promise.all([
-        fetch('https://counterapi.com/api/counter/beyondasport_total'),
-        fetch('https://counterapi.com/api/counter/beyondasport_unique_v2'),
-      ]);
-
-      const totalData = await totalRes.json();
-      const uniqueData = await uniqueRes.json();
-
-      document.getElementById('total-views').textContent = totalData.value ?? 'N/A';
-      document.getElementById('unique-visitors').textContent = uniqueData.value ?? 'N/A';
-    } catch (error) {
-      console.error('Error updating counters:', error);
-      document.getElementById('total-views').textContent = 'Error';
-      document.getElementById('unique-visitors').textContent = 'Error';
-    }
-  }
-
-  window.addEventListener('load', updateCounters);
 
     
   </script>
